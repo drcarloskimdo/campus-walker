@@ -28,10 +28,6 @@ h1 span{color:var(--gold)}
 .fName{font-family:Fraunces,serif;font-weight:700;font-size:17px;line-height:1.15}
 .fLoc{font-size:12px;color:var(--muted)}
 .fBlurb{font-size:12.5px;line-height:1.45;color:#4b5563;margin-top:8px}
-.fNews{display:block;margin-top:9px;padding:8px 10px;border-radius:10px;background:#fff;border:1px solid #f0d49a;text-decoration:none;color:var(--ink);font-size:12.5px;line-height:1.4}
-.fNews:hover{border-color:var(--gold)}
-.fNewsTag{display:block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a86b00;margin-bottom:2px}
-.fNewsSrc{display:block;margin-top:3px;font-size:11px;color:var(--muted)}
 .fBtns{display:flex;gap:6px;margin-top:10px}
 .fBtn{flex:1;border:0;border-radius:9px;padding:8px 6px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;background:var(--ink);color:#fff}
 .fBtn.alt{background:#fff;color:var(--ink);border:1px solid #e8c46a}
@@ -294,10 +290,9 @@ svg:active{cursor:grabbing}
       <label><input type="checkbox" id="cSeen"> I've walked this campus</label>
     </div>
     <div class="featured" id="featured">
-      <div class="fLabel">⭐ Featured campus · in the news</div>
+      <div class="fLabel">⭐ Featured campus</div>
       <div class="fRow"><span id="fBadge"></span><div><div class="fName" id="fName"></div><div class="fLoc" id="fLoc"></div></div></div>
       <div class="fBlurb" id="fBlurb"></div>
-      <a class="fNews" id="fNews" target="_blank" rel="noopener"><span class="fNewsTag">📰 Headline</span><span id="fNewsText"></span><span class="fNewsSrc" id="fNewsSrc"></span></a>
       <div class="fBtns"><button class="fBtn" id="fTour">🏛 Take the tour</button><button class="fBtn alt" id="fLife">☀ Day in the life</button></div>
     </div>
   </main>
@@ -852,12 +847,9 @@ function updateStats(){
 }
 
 // ---- Featured campus (change FEATURED to swap) ----
-// Pick the campus with the most recent headlines. Update weekly: name, blurb, headline, source, date, url.
 const FEATURED = {
   name:"Harvard University",
-  blurb:"Founded in 1636, Harvard is the oldest institution of higher learning in the United States. Stroll through Harvard Yard and past Widener Library.",
-  headline:"A federal judge issued a narrow ruling in the government's case seeking Harvard's admissions data.",
-  source:"The Washington Post", date:"Nov 3, 2026", url:"https://www.washingtonpost.com/higher-education/"
+  blurb:"Founded in 1636, Harvard is the oldest institution of higher learning in the United States. Stroll through Harvard Yard, past Widener Library and the John Harvard statue, then see a student's day on campus."
 };
 (function(){
   const f = data.find(d=>d.name===FEATURED.name); if(!f){ document.getElementById("featured").style.display="none"; return; }
@@ -865,9 +857,6 @@ const FEATURED = {
   document.getElementById("fName").textContent = f.name;
   document.getElementById("fLoc").textContent = f.city+", "+f.country;
   document.getElementById("fBlurb").textContent = FEATURED.blurb;
-  const n = document.getElementById("fNews");
-  if(FEATURED.headline){ n.href = FEATURED.url; document.getElementById("fNewsText").textContent = FEATURED.headline; document.getElementById("fNewsSrc").textContent = FEATURED.source+" · "+FEATURED.date+" ↗"; }
-  else n.style.display="none";
   document.getElementById("fTour").onclick = ()=>{ select(f,true); };
   const lifeBtn = document.getElementById("fLife");
   lifeBtn.onclick = ()=>{ select(f,true); showMode(f,"life"); };
